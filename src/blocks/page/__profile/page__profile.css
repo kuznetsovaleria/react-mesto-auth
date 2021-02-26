@@ -1,0 +1,9 @@
+.page__profile {
+    margin: 40px auto 51px;
+}
+
+@media screen and (max-width: 425px) {
+    .page__profile {
+        margin: 38px auto 36px;
+    }
+}

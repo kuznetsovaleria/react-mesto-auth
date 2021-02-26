@@ -1,0 +1,27 @@
+.popup__close {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: -35px;
+    right: -35px;
+}
+
+.popup__close:hover {
+    opacity: .6;
+    transition: opacity .5s;
+    cursor: url('../../../images/cursor.png'), pointer;
+}
+
+.popup__close:focus {
+    outline: none;
+}
+
+@media screen and (max-width: 425px) {
+    .popup__close {
+        top: -25px;
+        right: -28px;
+    }
+}
