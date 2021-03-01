@@ -1,0 +1,57 @@
+.infotool {
+    position: fixed; 
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden; 
+    /* opacity: 0.5; */
+    transition: visibility .5s, opacity .5s linear; 
+}
+
+.infotool__container {
+    width: 100%;
+    max-width: 430px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+}
+
+.infotool__close {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: -35px;
+    right: -35px;
+}
+
+.infotool__icon {
+    width: 40px;
+    height: 40px;
+}
+
+.infotool__img-status {
+    width: 120px;
+    height: 120px;
+    margin: 60px 155px 60px;
+}
+
+.infotool__message {
+    margin: 0 36px 60px;
+    max-width: 358px;
+    color: black;
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 29px;
+    text-align: center;
+}
