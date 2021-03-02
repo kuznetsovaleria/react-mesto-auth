@@ -1,80 +1,81 @@
 .welcome {
-    background-color: black;
+  background-color: black;
 }
 
 .welcome__form {
-    display: flex;
-    flex-direction: column;
-    background-color: black;
-    margin: 60px auto 0;
-    max-width: 358px;
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  margin: 60px auto 0;
+  max-width: 358px;
 }
 
 .welcome__title {
-    color: white;
-    font-size: 24px;
-    font-weight: 900;
-    text-align: center;
-    max-height: 29px;
-    margin: 0;
-    line-height: 29px;
+  color: white;
+  font-size: 24px;
+  font-weight: 900;
+  text-align: center;
+  max-height: 29px;
+  margin: 0;
+  line-height: 29px;
 }
 
 .welcome__input {
-    border: none;
-    border-bottom:  2px solid #CCCCCC;
-    margin-top: 50px;
-    background-color: black;
-    color: white;
-    padding: 0 0 13px;
-    line-height: 17px;
+  border: none;
+  border-bottom: 2px solid #cccccc;
+  margin-top: 50px;
+  background-color: black;
+  color: white;
+  padding: 0 0 13px;
+  line-height: 17px;
 }
 
 .welcome__input:last-of-type {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 .welcome__button {
-    background: none;
-    border: none;
-    box-shadow: none;
-    width: 358px;
-    height: 50px;
-    border-radius: 2px;
-    background-color: #FFFFFF;
-    font-size: 18px;
-    font-weight: 400;
-    text-align: center;
-    margin-top: 216px;
+  background: none;
+  border: none;
+  box-shadow: none;
+  width: 358px;
+  height: 50px;
+  border-radius: 2px;
+  background-color: #ffffff;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 216px;
 }
 
 .welcome__button:hover {
-    opacity: .8;
-    transition: opacity .5s;
+  opacity: 0.8;
+  transition: opacity 0.5s;
+  cursor: pointer;
 }
 
 .welcome__signin {
-    background-color: black;
-    text-align: center;
-    color: #FFFFFF;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 17px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background-color: black;
+  text-align: center;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .welcome__signin p {
-    margin-right: 3px;
+  margin-right: 3px;
 }
 
 .welcome__login-link {
-    background-color: black;
-    text-align: center;
-    color: #FFFFFF;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 17px;
-    text-decoration: none;
+  background-color: black;
+  text-align: center;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 17px;
+  text-decoration: none;
 }

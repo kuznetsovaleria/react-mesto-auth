@@ -1,0 +1,10 @@
+.header__link_out {
+    color: #A9A9A9;
+    margin-left: 24px;
+}
+
+.header__link_out:hover {
+    opacity: .8;
+    transition: opacity .5s;
+    cursor: url('../../../images/cursor.png'), pointer;
+}

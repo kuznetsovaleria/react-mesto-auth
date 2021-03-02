@@ -1,0 +1,6 @@
+.popup__infotooltip {
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+}

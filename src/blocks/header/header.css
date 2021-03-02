@@ -1,8 +1,8 @@
 .header {
-    max-width: 882px;
+    min-width: 882px;
     margin: 0 auto;
     padding-top: 45px;
-    padding-bottom: 40px;
+    padding-bottom: 30px;
     position: relative;
     border-bottom:  1px solid rgba(84, 84, 84, .7);
     display: flex;
@@ -11,26 +11,30 @@
 
 @media screen and (max-width: 1000px) {
     .header {
-        max-width: 690px;
+        min-width: 690px;
+        margin: 0 40px;
     }
 }
 
 @media screen and (max-width: 768px) {
     .header {
-        max-width: 500px;
+        min-width: 500px;
         padding-top: 32px;
     }
 }
 
 @media screen and (max-width: 570px) {
     .header {
+        min-width: 400px;
         padding-left: 27px;
+        margin: 0;
     }
 }
 
 @media screen and (max-width: 425px) {
     .header {
-        padding-top: 28px;
-        padding-bottom: 32px;
+        min-width: 380px;
+        margin: 28px 36px 32px 22px;
+        padding: 0;
     }
 }

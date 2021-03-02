@@ -21,7 +21,7 @@ function Header({loggedIn, email, onSignOut}) {
             </Route>
             {loggedIn ? <>
             <li className="header__item">{email}</li>
-            <li onClick={onSignOut} className="header__link">Выйти</li>
+            <li onClick={onSignOut} className="header__link header__link_out">Выйти</li>
             </> : ''}
           </Switch>
         </ul>

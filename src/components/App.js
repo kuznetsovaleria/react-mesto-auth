@@ -4,25 +4,32 @@ import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import React from "react";
-import { Redirect, Route, Switch, useHistory } from 'react-router-dom'
+import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import api from "../api/api";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Login from "./Login";
-import Register from "./Register"
-// import InfoTooltip from "./InfoTooltip";
+import Register from "./Register";
+import InfoTooltip from "./InfoTooltip";
 import ProtectedRoute from "./ProtectedRoute";
 import * as auth from "../auth/auth";
 
 function App() {
-
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [email, setEmail] = React.useState('');
+  const [email, setEmail] = React.useState("");
   const history = useHistory();
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  const [registerSuccess, setRegisterSuccess] = React.useState(false);
+  const [isInfoTooltipPopupOpen, setIsInfoToolPopupOpen] = React.useState(
+    false
+  );
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(
+    false
+  );
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(
+    false
+  );
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
@@ -30,59 +37,70 @@ function App() {
   const [cards, setCards] = React.useState([]);
 
   // ОБРАБОТКА РЕГИСТРАЦИИ
-  function handleRegister({email, password}) {
-    return auth.register(email, password)
+  function handleRegister({ email, password }) {
+    return auth
+      .register(email, password)
       .then((res) => {
         if (!res || res.statusCode === 400) {
-          console.log('Что-то пошло не так')
-        }
-        return res;
-      })
-  };
-
-  // ОБРАБОТКА ЛОГИНА
-  function handleLogin({email, password}) {
-    return auth.login(email, password)
-      .then((res) => {
-        if (!res || res.statusCode === 400) {
-          console.log('Что-то пошло не так')
-        }
-        if(res.token) {
-          setLoggedIn(true);
-          setEmail(email)
-          localStorage.setItem('token', res.token)
+          console.log("Что-то пошло не так");
+        } else {
+          setRegisterSuccess(true);
+          setIsInfoToolPopupOpen(true);
+          history.push("/sign-in");
+          return res;
         }
       })
       .catch((err) => {
-        console.log(err)
-      })
+        console.log(err);
+        setIsInfoToolPopupOpen(true);
+      });
   }
 
-    // ПРОВЕРКА ТОКЕНА
-    const tokenCheck = React.useCallback(() => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        auth.checkToken(token)
+  // ОБРАБОТКА ЛОГИНА
+  function handleLogin({ email, password }) {
+    return auth
+      .login(email, password)
+      .then((res) => {
+        if (!res || res.statusCode === 400) {
+          console.log("Что-то пошло не так");
+        }
+        if (res.token) {
+          setLoggedIn(true);
+          setEmail(email);
+          localStorage.setItem("token", res.token);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  // ПРОВЕРКА ТОКЕНА
+  const tokenCheck = React.useCallback(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      auth
+        .checkToken(token)
         .then((res) => {
           if (res) {
             setLoggedIn(true);
-            setEmail(res.data.email)
+            setEmail(res.data.email);
           }
-          history.push('/')
+          history.push("/");
         })
-        .catch(() => history.push('/sign-in'))
-      }
-    }, [history])
+        .catch(() => history.push("/sign-in"));
+    }
+  }, [history]);
 
-      React.useEffect(() => {
-      tokenCheck();
-    }, [tokenCheck])
+  React.useEffect(() => {
+    tokenCheck();
+  }, [tokenCheck]);
 
   // ВЫХОД
   function handleSignOut() {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     setLoggedIn(false);
-    history.push('/sign-in')
+    history.push("/sign-in");
   }
 
   // ЗАГРУЗКА КАРТОЧЕК И ИНФОРМАЦИИ О ПОЛЬЗОВАТЕЛЕ С СЕРВЕРА
@@ -194,45 +212,48 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setSelectedCard({});
     setIsImagePopupOpen(false);
+    setIsInfoToolPopupOpen(false);
   }
 
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
-        <Header 
-          loggedIn={loggedIn}
-          email={email}
-          onSignOut={handleSignOut}/>
+        <Header loggedIn={loggedIn} email={email} onSignOut={handleSignOut} />
         <Switch>
-        <ProtectedRoute exact path="/"
-          component={Main}
-          loggedIn={loggedIn}
-          onEditAvatar={handleEditAvatarClick}
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
-          onCardClick={handleCardClick}
-          cards={cards}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-        />
+          <ProtectedRoute
+            exact
+            path="/"
+            component={Main}
+            loggedIn={loggedIn}
+            onEditAvatar={handleEditAvatarClick}
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            onCardClick={handleCardClick}
+            cards={cards}
+            onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
+          />
 
-        <Route path="/sign-up">
-          <Register onRegister={handleRegister}/>
-        </Route>
+          <Route path="/sign-up">
+            <Register onRegister={handleRegister} />
+          </Route>
 
-        <Route path="/sign-in">
-          <Login onLogin={handleLogin} tokenCheck={tokenCheck}/>
-        </Route>
+          <Route path="/sign-in">
+            <Login onLogin={handleLogin} tokenCheck={tokenCheck} />
+          </Route>
 
-        <Route>
-          {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
-        </Route>
-
+          <Route>
+            {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
+          </Route>
         </Switch>
 
-        {/* <InfoTooltip /> */}
-
         <Footer />
+
+        <InfoTooltip
+          isOpen={isInfoTooltipPopupOpen}
+          onClose={closeAllPopups}
+          onSuccess={registerSuccess}
+        />
 
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
