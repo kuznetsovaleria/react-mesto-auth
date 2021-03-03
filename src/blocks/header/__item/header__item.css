@@ -3,4 +3,14 @@
     font-size: 18px;
     line-height: 22px;
     font-weight: 500;
+
 }
+
+@media screen and (max-width: 320px) {
+    .header__item {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        max-width: 100px;
+    }
+} 

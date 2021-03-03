@@ -44,6 +44,7 @@ function Login({ onLogin }) {
         onSubmit={handleSubmit}
         className="welcome__form"
         autoComplete="off"
+        noValidate
       >
         <h3 className="welcome__title">Вход</h3>
         <p className="welcome__error">{message}</p>

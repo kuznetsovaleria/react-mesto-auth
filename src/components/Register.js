@@ -21,12 +21,6 @@ function Register({ onRegister }) {
     }));
   }
 
-  // ОЧИСТКА ФОРМЫ
-  function resetForm() {
-    setData(initialData);
-    setMessage("");
-  }
-
   // ОБРАБОТКА САБМИТА
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -34,7 +28,6 @@ function Register({ onRegister }) {
       return;
     }
     onRegister(data)
-      .then(resetForm)
       .then(() => history.push("/sign-in"))
       .catch((err) => setMessage(err.message || "Что-то пошло не так"));
   }

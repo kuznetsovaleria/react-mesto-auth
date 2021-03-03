@@ -7,3 +7,11 @@
     line-height: 29px;
     text-align: center;
 }
+
+@media screen and (max-width: 425px) {
+    .popup__infotooltip-message {
+        font-size: 20px;
+        line-height: 24px;
+        min-width: 220px;
+    }
+}
