@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import "./styles/Welcome.css";
 
 function Login({ onLogin }) {
@@ -8,8 +7,6 @@ function Login({ onLogin }) {
     password: "",
   };
   const [data, setData] = useState(initialData);
-  const [message, setMessage] = useState("");
-  const history = useHistory();
 
   // ОБРАБОТКА ИЗМЕНЕНИЙ В ИНПУТАХ
   function handleInputChange(evt) {
@@ -23,7 +20,6 @@ function Login({ onLogin }) {
   // ОЧИТСКА ФОРМЫ
   function resetForm() {
     setData(initialData);
-    setMessage("");
   }
 
   // ОБРАБОТКА САБМИТА
@@ -33,9 +29,7 @@ function Login({ onLogin }) {
       return;
     }
     onLogin(data)
-      .then(resetForm)
-      .then(() => history.push("/"))
-      .catch((err) => setMessage(err.message || "Что-то пошло не так"));
+    resetForm();
   }
 
   return (
@@ -47,7 +41,6 @@ function Login({ onLogin }) {
         noValidate
       >
         <h3 className="welcome__title">Вход</h3>
-        <p className="welcome__error">{message}</p>
         <input
           id="login-email"
           name="email"

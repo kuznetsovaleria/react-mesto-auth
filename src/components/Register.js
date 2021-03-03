@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./styles/Welcome.css";
 
 function Register({ onRegister }) {
@@ -9,8 +9,6 @@ function Register({ onRegister }) {
   };
 
   const [data, setData] = useState(initialData);
-  const [message, setMessage] = useState("");
-  const history = useHistory();
 
   // ВНЕСТИ ИЗМЕНЕНИЯ В ИНПУТЫ
   function handleInputChange(evt) {
@@ -27,9 +25,7 @@ function Register({ onRegister }) {
     if (!data.email || !data.password) {
       return;
     }
-    onRegister(data)
-      .then(() => history.push("/sign-in"))
-      .catch((err) => setMessage(err.message || "Что-то пошло не так"));
+    onRegister(data);
   }
 
   return (
@@ -41,7 +37,6 @@ function Register({ onRegister }) {
         noValidate
       >
         <h3 className="welcome__title">Регистрация</h3>
-        <p className="welcome__error">{message}</p>
         <input
           id="register-email"
           name="email"

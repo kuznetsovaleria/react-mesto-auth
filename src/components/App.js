@@ -68,6 +68,7 @@ function App() {
           setLoggedIn(true);
           setEmail(email);
           localStorage.setItem("token", res.token);
+          history.push("/");
         }
       })
       .catch((err) => {
@@ -210,7 +211,6 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
-    setSelectedCard({});
     setIsImagePopupOpen(false);
     setIsInfoToolPopupOpen(false);
   }

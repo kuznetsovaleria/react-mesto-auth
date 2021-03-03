@@ -38,12 +38,7 @@ export class Api {
         name: data.name,
         about: data.about,
       }),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    });
+    }).then(this._handleOriginalResponse);
   }
 
   addNewCard(data) {
@@ -57,12 +52,7 @@ export class Api {
         name: data.name,
         link: data.link,
       }),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    });
+    }).then(this._handleOriginalResponse);
   }
 
   putLike(_id) {
@@ -71,12 +61,7 @@ export class Api {
       headers: {
         authorization: this._token,
       },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    });
+    }).then(this._handleOriginalResponse);
   }
 
   removeLike(_id) {
@@ -85,12 +70,7 @@ export class Api {
       headers: {
         authorization: this._token,
       },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    });
+    }).then(this._handleOriginalResponse);
   }
 
   deleteCard(_id) {
@@ -99,12 +79,7 @@ export class Api {
       headers: {
         authorization: this._token,
       },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    });
+    }).then(this._handleOriginalResponse);
   }
 
   changeUserAvatar(data) {
@@ -117,12 +92,7 @@ export class Api {
       body: JSON.stringify({
         avatar: data.link,
       }),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    });
+    }).then(this._handleOriginalResponse);
   }
 }
 
