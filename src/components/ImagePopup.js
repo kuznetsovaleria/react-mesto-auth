@@ -1,9 +1,30 @@
 import closePopupPath from "../images/close-icon.svg";
+import React from "react";
+import { ESC_CODE } from "../utils/constants.js";
 
-function ImagePopup(props) {
+function ImagePopup({ isOpen, onClose, card }) {
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const handleEscapeClose = (evt) => {
+      if (evt.keyCode === ESC_CODE) {
+        onClose();
+      }
+    };
+    document.addEventListener("keydown", handleEscapeClose);
+    return () => {
+      document.removeEventListener("keydown", handleEscapeClose);
+    };
+  }, [isOpen, onClose]);
+
+  const handleOverlayClose = (evt) => {
+    if (evt.target === evt.currentTarget && isOpen) {
+      onClose();
+    }
+  };
   return (
     <section
-      className={`popup popup-photo ${props.isOpen ? "popup_opened" : ""}`}
+      className={`popup popup-photo ${isOpen ? "popup_opened" : ""}`}
+      onMouseDown={handleOverlayClose}
     >
       <div className="popup-photo__container">
         <button
@@ -14,15 +35,15 @@ function ImagePopup(props) {
             src={closePopupPath}
             alt="Закрыть"
             className="popup__icon"
-            onClick={props.onClose}
+            onClick={onClose}
           />
         </button>
         <img
-          src={props.card ? props.card.link : "#"}
-          alt={props.card.name}
+          src={card ? card.link : "#"}
+          alt={card.name}
           className="popup-photo__img"
         />
-        <p className="popup-photo__caption">{props.card.name}</p>
+        <p className="popup-photo__caption">{card.name}</p>
       </div>
     </section>
   );

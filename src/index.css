@@ -22,8 +22,11 @@
 @import url('../src/blocks/profile/__profession/profile__profession.css');
 @import url('../src/blocks/profile/__add-button/profile__add-button.css');
 
+@import url('../src/blocks/preloader/preloader.css');
+@import url('../src/blocks/preloader/preloader__circle/preloader__circle.css');
 
 @import url('../src/blocks/cards/cards.css');
+@import url('../src/blocks/cards/cards__loading/cards__loading.css');
 @import url('../src/blocks/card/card.css');
 @import url('../src/blocks/card/__photo/card__photo.css');
 @import url('../src/blocks/card/__delete/card__delete.css');
@@ -68,6 +71,7 @@
 @import url('../src/blocks/popup-photo/__close/popup-photo__close.css');
 @import url('../src/blocks/popup-photo/__img/popup-photo__img.css');
 @import url('../src/blocks/popup-photo/__caption/popup-photo__caption.css');
+
 
 
 

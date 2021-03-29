@@ -1,48 +1,40 @@
 import React from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import PopupWithForm from "./PopupWithForm";
+import { useForm } from "../hooks/useForm";
 
-function EditProfilePopup(props) {
-  const [name, setName] = React.useState("");
-  const [description, setDescription] = React.useState("");
+function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
+
+  const { values, handleChange, setValues } = useForm();
   const currentUser = React.useContext(CurrentUserContext);
 
   React.useEffect(() => {
-    setName(currentUser.name);
-    setDescription(currentUser.about);
-  }, [currentUser]);
-
-  function handleNameChange(evt) {
-    setName(evt.target.value);
-  }
-
-  function handleDescriptionChange(evt) {
-    setDescription(evt.target.value);
-  }
+    setValues({
+      name: currentUser.name,
+      about: currentUser.about
+    })
+  }, [currentUser, setValues]);
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    props.onUpdateUser({
-      name,
-      about: description,
-    });
+    onUpdateUser(values);
   }
 
   return (
     <PopupWithForm
       title="Редактировать профиль"
       name="edit"
-      isOpen={props.isOpen}
-      onClose={props.onClose}
+      isOpen={isOpen}
+      onClose={onClose}
       onSubmit={handleSubmit}
     >
       <input
-        value={name || ""}
-        onChange={handleNameChange}
+        value={values.name || ""}
+        onChange={handleChange}
         id="name-input"
         className="popup__input popup__input_name"
         type="text"
-        name="edit-name"
+        name="name"
         minLength="2"
         maxLength="40"
         placeholder="Имя"
@@ -50,11 +42,11 @@ function EditProfilePopup(props) {
       />
       <span id="name-input-error" className="error" />
       <input
-        value={description || ""}
-        onChange={handleDescriptionChange}
+        value={values.about|| ""}
+        onChange={handleChange}
         id="profession-input"
         type="text"
-        name="edit-profession"
+        name="about"
         className="popup__input popup__input_profession"
         minLength="2"
         maxLength="200"

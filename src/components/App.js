@@ -35,6 +35,10 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState({});
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
+  const [cardForDelete, setcardForDelete] = React.useState({});
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = React.useState(false);
+  const [isCardsLoading, setIsCardsLoading] = React.useState(false);
+  const [isCardsLoadError, setIsCardsLoadError] = React.useState('')
 
   // ОБРАБОТКА РЕГИСТРАЦИИ
   function handleRegister({ email, password }) {
@@ -106,14 +110,17 @@ function App() {
 
   // ЗАГРУЗКА КАРТОЧЕК И ИНФОРМАЦИИ О ПОЛЬЗОВАТЕЛЕ С СЕРВЕРА
   React.useEffect(() => {
+    setIsCardsLoading(true);
+    setIsCardsLoadError('');
     Promise.all([api.getUserData(), api.getInitialCards()])
       .then(([userData, cards]) => {
         setCurrentUser(userData);
         setCards(cards);
       })
       .catch((err) => {
-        console.log(err);
-      });
+        setIsCardsLoadError(err);
+      })
+      .finally(() => setIsCardsLoading(false));
   }, []);
 
   //ОТКРЫТЬ РЕДАКТИРОВАНИЕ АВАТАРА
@@ -131,7 +138,8 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(() => setIsCardsLoading(false))
   }
 
   // ОТКРЫТЬ РЕДАКТИРОВАНИЕ ПРОФИЛЯ
@@ -162,7 +170,10 @@ function App() {
     api
       .addNewCard(cardData)
       .then((newCard) => {
-        setCards([newCard, ...cards]);
+        setCards((state) => [
+          newCard,
+          ...state,
+        ])
         closeAllPopups();
       })
       .catch((err) => {
@@ -179,21 +190,31 @@ function App() {
 
     likeRequest
       .then((newCard) => {
-        const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
-        setCards(newCards);
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+        // const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
+        // setCards(newCards);
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  //ПОПАП УДАЛЕНИЯ КАРТОЧКИ
+  function handleCardDeleteRequest(card) {
+    setcardForDelete(card);
+    setIsDeletePopupOpen(true);
   }
 
   // УДАЛЕНИЕ КАРТОЧКИ
-  function handleCardDelete(card) {
+  function handleCardDelete(evt) {
+    evt.preventDefault();
     api
-      .deleteCard(card._id)
+      .deleteCard(cardForDelete._id)
       .then(() => {
-        const newCards = cards.filter((c) => c._id !== card._id);
-        setCards(newCards);
+        setCards((state) => state.filter((c) => c._id !== cardForDelete._id));
+        setIsDeletePopupOpen(false);
+        // const newCards = cards.filter((c) => c._id !== card._id);
+        // setCards(newCards);
       })
       .catch((err) => {
         console.log(err);
@@ -213,6 +234,7 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsImagePopupOpen(false);
     setIsInfoToolPopupOpen(false);
+    setIsDeletePopupOpen(false);
   }
 
   return (
@@ -231,7 +253,9 @@ function App() {
             onCardClick={handleCardClick}
             cards={cards}
             onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
+            onCardDelete={handleCardDeleteRequest}
+            isCardsLoading={isCardsLoading}
+            isCardsError={isCardsLoadError}
           />
 
           <Route path="/sign-up">
@@ -276,8 +300,10 @@ function App() {
         <PopupWithForm
           title="Вы уверены?"
           name="delete-place"
-          isOpen={false}
+          isOpen={isDeletePopupOpen}
           onClose={closeAllPopups}
+          buttonText="Да"
+          onSubmit={handleCardDelete}
         ></PopupWithForm>
 
         <ImagePopup
